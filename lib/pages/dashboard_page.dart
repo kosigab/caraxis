@@ -83,12 +83,13 @@ class _DashboardPageState extends State<DashboardPage> {
           Align(
             alignment: Alignment.bottomCenter,
             child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 16.0),
+              padding: EdgeInsets.symmetric(vertical: 26.0),
               child: FloatingActionButton(
+
                 onPressed: () {
                   // Implement SOS button functionality
                 },
-                child: Icon(Icons.warning_amber_outlined, size: 36),
+                child: Icon(Icons.warning_amber_outlined, size: 46),
                 backgroundColor: Colors.red,
               ),
             ),
