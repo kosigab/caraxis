@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:flutter_tutorials/components/bottom_nav.dart';
 
 class DashboardPage extends StatefulWidget {
   @override
@@ -33,8 +34,6 @@ class _DashboardPageState extends State<DashboardPage> {
   }
 
   void _updateMarker() {
-    // Fetch new coordinates from the API and update the new_location variable.
-    // For now, we'll just use the same coordinates for demonstration purposes.
     new_location = [53.569740, -2.221863];
 
     setState(() {
@@ -50,9 +49,9 @@ class _DashboardPageState extends State<DashboardPage> {
     _mapController.animateCamera(
       CameraUpdate.newCameraPosition(
         CameraPosition(
-          target: LatLng(new_location[0], new_location[1]),
-          zoom: 17.0,
-          tilt: 0
+            target: LatLng(new_location[0], new_location[1]),
+            zoom: 17.0,
+            tilt: 0
         ),
       ),
     );
@@ -67,61 +66,58 @@ class _DashboardPageState extends State<DashboardPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Dashboard', style: GoogleFonts.roboto()),
-      ),
-      body: Stack(
-        children: [
-          GoogleMap(
-            onMapCreated: _onMapCreated,
-            markers: _markers,
-            initialCameraPosition: CameraPosition(
-              target: LatLng(new_location[0], new_location[1]),
-              zoom: 16.0,
-            ),
-          ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 26.0),
-              child: FloatingActionButton(
-
-                onPressed: () {
-                  // Implement SOS button functionality
-                },
-                child: Icon(Icons.warning_amber_outlined, size: 46),
-                backgroundColor: Colors.red,
+        appBar: AppBar(
+          title: Text('Dashboard', style: GoogleFonts.roboto()),
+        ),
+        body: Stack(
+          children: [
+            GoogleMap(
+              onMapCreated: _onMapCreated,
+              markers: _markers,
+              initialCameraPosition: CameraPosition(
+                target: LatLng(new_location[0], new_location[1]),
+                zoom: 16.0,
               ),
             ),
-          ),
-        ],
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.location_on),
-            label: 'Location',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Settings',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle),
-            label: 'Profile',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-        selectedItemColor: Theme.of(context).primaryColor,
-        unselectedItemColor: Colors.grey,
-        showUnselectedLabels: false,
-        type: BottomNavigationBarType.fixed,
-      ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: FractionallySizedBox(
+                heightFactor: 0.33,
+                alignment: Alignment.bottomCenter,
+                child: Card(
+                  margin: EdgeInsets.all(0), // Make the card flush with screen edges
+                  color: Colors.white10,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(16.0),
+                      topRight: Radius.circular(16.0),
+                    ),
+                  ),
+                  child: Container(
+                    // Your container code here
+                  ),
+                ),
+              ),
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 26.0),
+                child: FloatingActionButton(
+                  onPressed: () {
+                    // Implement SOS button functionality
+                  },
+                  child: Icon(Icons.warning_amber_outlined, size: 46),
+                  backgroundColor: Colors.red,
+                ),
+              ),
+            ),
+          ],
+        ),
+        bottomNavigationBar: BottomNav(
+          onItemTapped: _onItemTapped,
+          selectedIndex: _selectedIndex,
+        )
     );
   }
 }
