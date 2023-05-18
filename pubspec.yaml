@@ -17,6 +17,7 @@ dependencies:
   google_sign_in: ^5.2.1
   google_maps_flutter: ^2.2.6
   flutter_dotenv: ^5.0.2
+  sliding_up_panel: ^2.0.0+1
 
 dev_dependencies:
   flutter_test:
