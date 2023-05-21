@@ -98,10 +98,10 @@ String dark_map = '[{"elementType":"geometry","stylers":[{"color":"#1d2c4d"}]},{
           CustomSlidingUpPanel(),
         ],
       ),
-      bottomNavigationBar: BottomNav(
-        onItemTapped: _onItemTapped,
-        selectedIndex: _selectedIndex,
-      ),
+      // bottomNavigationBar: BottomNav(
+      //   onItemTapped: _onItemTapped,
+      //   selectedIndex: _selectedIndex,
+      // ),
     );
   }
 }
