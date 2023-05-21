@@ -14,6 +14,7 @@ class _BottomNavState extends State<BottomNav> {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
+      backgroundColor: Colors.black87,
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(
           icon: Icon(Icons.home),
@@ -37,6 +38,7 @@ class _BottomNavState extends State<BottomNav> {
       selectedItemColor: Theme.of(context).primaryColor,
       unselectedItemColor: Colors.grey,
       showUnselectedLabels: false,
+
       type: BottomNavigationBarType.fixed,
     );
   }

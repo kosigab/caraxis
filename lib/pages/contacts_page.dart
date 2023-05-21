@@ -10,6 +10,7 @@ class ContactsPage extends StatefulWidget {
 class _ContactsPageState extends State<ContactsPage> {
   List<Contact> _contacts = [];
   List<Contact> _selectedContacts = [];
+  bool _isSelectionActivated = false;
 
   @override
   void initState() {
@@ -17,6 +18,7 @@ class _ContactsPageState extends State<ContactsPage> {
   }
 
   Future<void> getContact() async {
+    // Check contact permission
     if (await Permission.contacts.request().isGranted) {
       Contact? contact = await ContactsService.openDeviceContactPicker();
       if (contact != null) {
@@ -27,30 +29,42 @@ class _ContactsPageState extends State<ContactsPage> {
     }
   }
 
-  void _selectContact(Contact contact) {
+  _onLongPressed(Contact contact) {
     setState(() {
-      _selectedContacts.contains(contact)
-          ? _selectedContacts.remove(contact)
-          : _selectedContacts.add(contact);
+      _isSelectionActivated = true;
+      _selectedContacts.add(contact);
     });
   }
 
-  void _selectAllContacts() {
+  _onTap(Contact contact) {
     setState(() {
-      _selectedContacts = List.from(_contacts);
+      if (_selectedContacts.contains(contact)) {
+        _selectedContacts.remove(contact);
+      } else {
+        _selectedContacts.add(contact);
+      }
+      if (_selectedContacts.isEmpty) {
+        _isSelectionActivated = false;
+      }
     });
   }
 
-  void _deselectAllContacts() {
+  void _selectAll() {
     setState(() {
-      _selectedContacts.clear();
+      if (_selectedContacts.length == _contacts.length) {
+        _selectedContacts.clear();
+        _isSelectionActivated = false;
+      } else {
+        _selectedContacts = List.from(_contacts);
+      }
     });
   }
 
-  void _deleteContacts() {
+  void _deleteSelectedContacts() {
     setState(() {
       _contacts.removeWhere((contact) => _selectedContacts.contains(contact));
       _selectedContacts.clear();
+      _isSelectionActivated = false;
     });
   }
 
@@ -59,10 +73,10 @@ class _ContactsPageState extends State<ContactsPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Emergency Contacts'),
-        actions: _selectedContacts.isNotEmpty
+        actions: _isSelectionActivated
             ? [
-          IconButton(icon: Icon(Icons.select_all), onPressed: _selectAllContacts),
-          IconButton(icon: Icon(Icons.delete), onPressed: _deleteContacts),
+          IconButton(icon: Icon(Icons.select_all), onPressed: _selectAll),
+          IconButton(icon: Icon(Icons.delete), onPressed: _deleteSelectedContacts)
         ]
             : [],
       ),
@@ -71,18 +85,30 @@ class _ContactsPageState extends State<ContactsPage> {
         itemCount: _contacts.length,
         itemBuilder: (context, index) {
           Contact contact = _contacts[index];
-          bool isSelected = _selectedContacts.contains(contact);
           return ListTile(
-            leading: (contact.avatar != null && contact.avatar!.isNotEmpty)
-                ? CircleAvatar(
-              backgroundImage: MemoryImage(contact.avatar!),
+            onTap: () => _onTap(contact),
+            onLongPress: () => _onLongPressed(contact),
+            leading: _isSelectionActivated
+                ? Checkbox(
+              value: _selectedContacts.contains(contact),
+              onChanged: (value) {
+                _onTap(contact);
+              },
             )
-                : CircleAvatar(child: Text(contact.initials())),
-            title: Text('${contact.displayName ?? ''} ${ contact.phones?.first.value}'),
-            trailing: isSelected
-                ? Icon(Icons.check_box)
-                : Icon(Icons.check_box_outline_blank),
-            onLongPress: () => _selectContact(contact),
+                : null,
+            title: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(contact.displayName ?? ''),
+                Text(
+                  contact.phones?.first.value ?? '',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.grey,
+                  ),
+                ),
+              ],
+            ),
           );
         },
       )

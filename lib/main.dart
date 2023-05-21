@@ -5,6 +5,8 @@ import 'pages/dashboard_page.dart';
 import 'pages/settings_page.dart';
 import 'pages/contacts_page.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'fleetp/flogin_page.dart';
+import 'fleetp/main_page.dart';
 
 // Future<void> main() async {
 //   await dotenv.load(fileName: ".env");
@@ -24,9 +26,11 @@ class CaraxisApp extends StatelessWidget {
       ),
       //home: LoginPage(),
       //home: RegisterPage(),
-      home: ContactsPage(),
+      //home: ContactsPage(),
       //home: SettingsPage(),
-      //home: DashboardPage(),
+      home: DashboardPage(),
+      //home: FLoginPage(),
+      //home: MainPage(),
     );
   }
 }
