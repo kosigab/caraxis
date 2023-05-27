@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tutorials/classes/status.dart';
 import 'package:google_fonts/google_fonts.dart';
 class MainPage extends StatefulWidget {
   @override
@@ -9,6 +10,7 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
   int speed = 0;
   int batteryCharge = 70;
   int range = 329;
+  Status currentStatus = Status();
 
   void updateStatus() {
     setState(() {
@@ -22,7 +24,7 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.black12,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -52,9 +54,8 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
                     color: Colors.grey,
                     size: 24,
                   ),
-                  onPressed: () async {
-                    Navigator.pop(context);
-                  },
+                  onPressed: (){}
+
                 ),
               ],
             ),
@@ -62,7 +63,7 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
           Padding(
             padding: const EdgeInsets.all(30.0),
             child: Image.asset(
-              'assets/images/carFull@2x.png',
+              currentStatus.cImg,
               width: MediaQuery.of(context).size.width,
             //  height: 100,
               fit: BoxFit.cover,
@@ -75,9 +76,10 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
           Text(
             '$speed',
             textAlign: TextAlign.center,
-            style: GoogleFonts.arimo(
-              fontSize: 90,
-              fontWeight: FontWeight.normal,
+
+            style: GoogleFonts.roboto(
+              fontSize: 120,
+              fontWeight: FontWeight.w100,
               color: Colors.black, // substitute with your desired color
             ),
           ),
@@ -101,16 +103,23 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'Battery Status',
+                  'Fuel Quantity',
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 16),
                 ),
               ],
             ),
           ),
-          LinearProgressIndicator(
-            value: batteryCharge / 100.0,
-            backgroundColor: Colors.grey,
+          Container(
+            width: MediaQuery.of(context).size.width *0.95,
+            height: 20,
+
+            child: LinearProgressIndicator(
+              value: batteryCharge / 100.0,
+
+              color: Colors.green,
+              backgroundColor: Colors.grey[400],
+            ),
           ),
           Padding(
             padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 10),

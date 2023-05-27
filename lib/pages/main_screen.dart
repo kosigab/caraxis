@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_tutorials/fleetp/main_page.dart';
-import 'package:flutter_tutorials/pages/dashboard_page.dart';
+import 'package:flutter_tutorials/pages/home_page.dart';
+import 'package:flutter_tutorials/components/map_widget.dart';
 import 'package:flutter_tutorials/pages/settings_page.dart';
 import 'package:flutter_tutorials/pages/login_page.dart';
 import 'package:flutter_tutorials/components/bottom_nav.dart';
+import 'package:flutter_tutorials/pages/dashboard_page.dart';
 
 class MainScreen extends StatefulWidget {
   @override
@@ -13,11 +14,11 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
 
-  static List<Widget> _widgetOptions = <Widget>[
+  static final List<Widget> _widgetOptions = <Widget>[
     MainPage(),
     DashboardPage(),
     SettingsPage(),
-    LoginPage(),
+    const LoginPage(),
   ];
 
   void _onItemTapped(int index) {

@@ -35,8 +35,8 @@ class _BottomNavState extends State<BottomNav> {
       ],
       currentIndex: widget.selectedIndex,
       onTap: widget.onItemTapped,
-      selectedItemColor: Theme.of(context).primaryColor,
-      unselectedItemColor: Colors.grey,
+      selectedItemColor: Colors.grey[200],
+      unselectedItemColor: Colors.grey[700],
       showUnselectedLabels: false,
 
       type: BottomNavigationBarType.fixed,
